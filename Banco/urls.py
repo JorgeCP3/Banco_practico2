@@ -4,7 +4,8 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from usuarios.views import login_view, register_view, dashboard_view, logout_view, beneficiario_view
 from usuarios.views.beneficiario_view import lista_beneficiarios, añadir_beneficiario, eliminar_beneficiario, \
     editar_beneficiario
-from usuarios.views.cuenta_view import detalle_cuenta, ingresar_dinero, retirar_dinero, realizar_transferencia
+from usuarios.views.cuenta_view import detalle_cuenta, ingresar_dinero, retirar_dinero, realizar_transferencia, \
+    crear_cuenta
 from usuarios.views.movimientos_view import lista_movimientos
 
 urlpatterns = [
@@ -22,6 +23,8 @@ urlpatterns = [
     path('cuenta/<int:cuenta_id>/ingresar/', ingresar_dinero, name='ingresar_dinero'),
     path('cuenta/<int:cuenta_id>/retirar/', retirar_dinero, name='retirar_dinero'),
     path('cuenta/<int:cuenta_id>/transferir/', realizar_transferencia, name='realizar_transferencia'),
+    path('cuentas/nueva/', crear_cuenta, name='crear_cuenta'),
+
 
     path('beneficiarios/', lista_beneficiarios, name='lista_beneficiarios'),
     path('beneficiarios/añadir/', añadir_beneficiario, name='añadir_beneficiario'),

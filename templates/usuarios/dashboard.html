@@ -19,7 +19,7 @@
               {% for cuenta in request.user.persona.cuentas.all %}
                 <a href="{% url 'detalle_cuenta' cuenta.id %}" class="list-group-item list-group-item-action">
                   <strong>Nro Cuenta:</strong> {{ cuenta.nro_cuenta }} |
-                  <strong>Saldo:</strong> ${{ cuenta.saldo }}
+                  <strong>Saldo:</strong> {{ cuenta.saldo }} Bs.
                 </a>
               {% empty %}
                 <li class="list-group-item">No tienes cuentas registradas.</li>
@@ -30,16 +30,17 @@
           {% endif %}
         </div>
 
-        <a href="#" class="btn btn-primary w-100">Añadir Nueva Cuenta</a>
+        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#crearCuentaModal">
+          Añadir Nueva Cuenta
+        </button>
       </div>
     </div>
 
     <div class="card shadow-lg w-75" style="cursor: pointer;" onclick="window.location.href='{% url 'añadir_beneficiario' %}';">
-  <div class="card-body text-center">
-    <h2 class="card-title mb-3">Beneficiarios</h2>
-  </div>
-</div>
-
+      <div class="card-body text-center">
+        <h2 class="card-title mb-3">Beneficiarios</h2>
+      </div>
+    </div>
 
     <div class="card shadow-lg w-75" style="cursor: pointer;" onclick="window.location.href='{% url 'lista_movimientos' %}';">
       <div class="card-body text-center">
@@ -48,6 +49,31 @@
       </div>
     </div>
 
+  </div>
+</div>
+
+<div class="modal fade" id="crearCuentaModal" tabindex="-1" aria-labelledby="crearCuentaModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="post" action="{% url 'crear_cuenta' %}">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title" id="crearCuentaModalLabel">Crear Nueva Cuenta</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+
+          <div class="mb-3">
+            <label for="saldo" class="form-label">Saldo Inicial</label>
+            <input type="number" step="0.01" name="saldo" id="saldo" class="form-control" required>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Crear Cuenta</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
 

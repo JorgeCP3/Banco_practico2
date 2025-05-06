@@ -14,7 +14,7 @@
   <div class="card shadow-lg rounded-4 p-4">
     <div class="card-body text-center">
       <h2 class="card-title mb-4">Cuenta N° <span class="text-primary">{{ cuenta.nro_cuenta }}</span></h2>
-      <p class="fs-5"><strong>Saldo actual:</strong> <span class="text-success">${{ cuenta.saldo }}</span></p>
+      <p class="fs-5"><strong>Saldo actual:</strong> <span class="text-success">{{ cuenta.saldo }} Bs.</span></p>
 
       <div class="d-flex justify-content-center gap-3 mt-4">
         <button class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#ingresoModal">
@@ -31,7 +31,6 @@
   </div>
 </div>
 
-<!-- Modal para Ingresar Dinero -->
 <div class="modal fade" id="ingresoModal" tabindex="-1" aria-labelledby="ingresoModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -55,7 +54,6 @@
   </div>
 </div>
 
-<!-- Modal para Retirar Dinero -->
 <div class="modal fade" id="retiroModal" tabindex="-1" aria-labelledby="retiroModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">

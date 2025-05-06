@@ -85,3 +85,11 @@ def retirar_dinero(request, cuenta_id):
 
             messages.success(request, f'Se retiraron ${monto:.2f} correctamente.')
     return redirect('detalle_cuenta', cuenta_id=cuenta.id)
+
+def crear_cuenta(request):
+    if request.method == 'POST':
+        saldo = float(request.POST['saldo'])
+        cuenta = Cuenta.objects.create(saldo=saldo, persona=request.user.persona)
+        messages.success(request, f'Cuenta creada con éxito. N° {cuenta.nro_cuenta}')
+        return redirect('detalle_cuenta', cuenta_id=cuenta.id)
+    return redirect('dashboard')  # o donde prefieras
