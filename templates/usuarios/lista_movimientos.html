@@ -1,0 +1,41 @@
+{% extends 'usuarios/base.html' %}
+
+{% block content %}
+  <div class="container my-5">
+    <h2 class="text-center mb-4">Lista de Movimientos</h2>
+
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th>Fecha</th>
+            <th>Tipo</th>
+            <th>Cantidad</th>
+            <th>Cuenta</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for movimiento in movimientos %}
+            <tr>
+              <td>{{ movimiento.fecha }}</td>
+              <td>
+                {% if movimiento.tipo == 'ingreso' %}
+                  <span class="badge bg-success">Ingreso</span>
+                {% else %}
+                  <span class="badge bg-danger">Egreso</span>
+                {% endif %}
+              </td>
+              <td>${{ movimiento.cantidad }}</td>
+              <td>{{ movimiento.cuenta.nro_cuenta }}</td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="4" class="text-center">No hay movimientos registrados.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+{% endblock %}

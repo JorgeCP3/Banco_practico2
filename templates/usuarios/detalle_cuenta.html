@@ -1,0 +1,82 @@
+{% extends "usuarios/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <div class="card shadow-lg rounded-4 p-4">
+    <div class="card-body text-center">
+      <h2 class="card-title mb-4">Cuenta N° <span class="text-primary">{{ cuenta.nro_cuenta }}</span></h2>
+      <p class="fs-5"><strong>Saldo actual:</strong> <span class="text-success">${{ cuenta.saldo }}</span></p>
+
+      <div class="d-flex justify-content-center gap-3 mt-4">
+        <button class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#ingresoModal">
+          <i class="bi bi-plus-circle"></i> Ingresar Dinero
+        </button>
+        <button class="btn btn-danger btn-lg" data-bs-toggle="modal" data-bs-target="#retiroModal">
+          <i class="bi bi-dash-circle"></i> Retirar Dinero
+        </button>
+        <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#transferenciaModal">
+          <i class="bi bi-arrow-right-circle"></i> Realizar Transferencia
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para Ingresar Dinero -->
+<div class="modal fade" id="ingresoModal" tabindex="-1" aria-labelledby="ingresoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form method="post" action="{% url 'ingresar_dinero' cuenta.id %}">
+        {% csrf_token %}
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title" id="ingresoModalLabel">Ingresar Dinero</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="montoIngreso" class="form-label">Monto a Ingresar</label>
+            <input type="number" name="monto" class="form-control form-control-lg" placeholder="Ingrese el monto" min="0" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success w-100">Ingresar Dinero</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para Retirar Dinero -->
+<div class="modal fade" id="retiroModal" tabindex="-1" aria-labelledby="retiroModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form method="post" action="{% url 'retirar_dinero' cuenta.id %}">
+        {% csrf_token %}
+        <div class="modal-header bg-danger text-white">
+          <h5 class="modal-title" id="retiroModalLabel">Retirar Dinero</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="montoRetiro" class="form-label">Monto a Retirar</label>
+            <input type="number" name="monto" class="form-control form-control-lg" placeholder="Ingrese el monto" min="0" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger w-100">Retirar Dinero</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "usuarios/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Mis Beneficiarios</h2>
+        <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#añadirBeneficiarioModal">Añadir Beneficiario</a>
+    </div>
+
+    {% if beneficiarios %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>N° de Cuenta</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for beneficiario in beneficiarios %}
+                    <tr>
+                        <td>{{ beneficiario.nombre }}</td>
+                        <td>{{ beneficiario.apellido }}</td>
+                        <td>{{ beneficiario.nroCuenta }}</td>
+                        <td>
+                            <a href="{% url 'editar_beneficiario' beneficiario.id %}" class="btn btn-warning btn-sm">Editar</a>
+                            <a href="{% url 'eliminar_beneficiario' beneficiario.id %}" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar este beneficiario?')">Eliminar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            No tienes beneficiarios agregados todavía.
+        </div>
+    {% endif %}
+</div>
+
+<div class="modal fade" id="añadirBeneficiarioModal" tabindex="-1" aria-labelledby="añadirBeneficiarioModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="post" action="{% url 'añadir_beneficiario' %}">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title" id="añadirBeneficiarioModalLabel">Añadir Beneficiario</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" required>
+          </div>
+          <div class="mb-3">
+            <label for="apellido" class="form-label">Apellido</label>
+            <input type="text" class="form-control" id="apellido" name="apellido" required>
+          </div>
+          <div class="mb-3">
+            <label for="nroCuenta" class="form-label">N° de Cuenta</label>
+            <input type="number" class="form-control" id="nroCuenta" name="nroCuenta" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar Beneficiario</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

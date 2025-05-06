@@ -1,0 +1,25 @@
+{% extends "usuarios/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Editar Beneficiario</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" value="{{ beneficiario.nombre }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="apellido" class="form-label">Apellido</label>
+            <input type="text" class="form-control" id="apellido" name="apellido" value="{{ beneficiario.apellido }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="nroCuenta" class="form-label">N° de Cuenta</label>
+            <input type="number" class="form-control" id="nroCuenta" name="nroCuenta" value="{{ beneficiario.nroCuenta }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    </form>
+</div>
+{% endblock %}

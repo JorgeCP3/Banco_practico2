@@ -1,0 +1,54 @@
+{% extends "usuarios/base.html" %}
+
+{% block content %}
+
+<div class="container my-5">
+  <h1 class="text-center mb-5">
+    Bienvenido, {{ request.user.persona.nombre }} {{ request.user.persona.apellido }}!
+  </h1>
+
+  <div class="d-flex flex-column align-items-center gap-4">
+
+    <div class="card shadow-lg w-75">
+      <div class="card-body text-center">
+        <h2 class="card-title mb-3">Tus Cuentas</h2>
+
+        <div>
+          {% if request.user.persona.cuentas.all %}
+            <ul class="list-group mb-3">
+              {% for cuenta in request.user.persona.cuentas.all %}
+                <a href="{% url 'detalle_cuenta' cuenta.id %}" class="list-group-item list-group-item-action">
+                  <strong>Nro Cuenta:</strong> {{ cuenta.nro_cuenta }} |
+                  <strong>Saldo:</strong> ${{ cuenta.saldo }}
+                </a>
+              {% empty %}
+                <li class="list-group-item">No tienes cuentas registradas.</li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p>No tienes cuentas registradas.</p>
+          {% endif %}
+        </div>
+
+        <a href="#" class="btn btn-primary w-100">Añadir Nueva Cuenta</a>
+      </div>
+    </div>
+
+    <div class="card shadow-lg w-75" style="cursor: pointer;" onclick="window.location.href='{% url 'añadir_beneficiario' %}';">
+  <div class="card-body text-center">
+    <h2 class="card-title mb-3">Beneficiarios</h2>
+  </div>
+</div>
+
+
+    <div class="card shadow-lg w-75" style="cursor: pointer;" onclick="window.location.href='{% url 'lista_movimientos' %}';">
+      <div class="card-body text-center">
+        <h2 class="card-title mb-3">Movimientos</h2>
+        <p>Consulta tus movimientos recientes aquí.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
